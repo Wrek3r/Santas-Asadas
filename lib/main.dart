@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:santas_asadas/Chat.dart';
 import 'package:santas_asadas/Inicio.dart';
+import 'package:santas_asadas/Local.dart';
 import 'package:santas_asadas/Menu.dart';
+import 'package:santas_asadas/Promos.dart';
 
 void main() {
   runApp( MyApp());
@@ -18,53 +21,76 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor:  Color(0xFFF58220),
         useMaterial3: true,
       ),
-      home:  MainScreen(),
+      home:  Main(),
     );
   }
 }
 
-class MainScreen extends StatefulWidget {
-   MainScreen({super.key});
+class Main extends StatefulWidget {
+  Main({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<Main> createState() => _MainState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainState extends State<Main> {
   int _indice = 0;
-
-  final List<Widget> _pantallas = [
-     Inicio(),
-     Menu(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _indice = index;
-    });
+Widget Pantallas(){
+  switch(_indice){
+    case 0:
+      return Inicio();
+    case 1:
+      return Menu();
+    case 2:
+      return Promos();
+    case 3:
+      return Local();
+      case 4:
+      return Chat();
+    default:
+      return Inicio();
   }
 
+
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pantallas[_indice],
+      body: Pantallas(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor:  Color(0xFFF58220),
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.black,
         currentIndex: _indice,
-        onTap: _onItemTapped,
-        selectedLabelStyle:  TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-        unselectedLabelStyle:  TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+        onTap: (index) {
+          setState(() => _indice = index);
+        },
         items:  [
-          BottomNavigationBarItem(icon: Icon(Icons.home, size: 30), label: 'Inicio'),
-          BottomNavigationBarItem(icon: Icon(Icons.restaurant_menu, size: 30), label: 'Menú'),
-          BottomNavigationBarItem(icon: Icon(Icons.percent, size: 30), label: 'Promos'),
-          BottomNavigationBarItem(icon: Icon(Icons.location_on, size: 30), label: 'Local'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat_bubble, size: 30), label: 'Chat'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Inicio",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.restaurant_menu),
+            label: "Menú",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.percent),
+            label: "Promos",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.location_on),
+            label: "Local",
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.chat_bubble, size: 30),
+              label: 'Chat'),
+
         ],
       ),
+
     );
+
   }
 }

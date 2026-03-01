@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Menu extends StatelessWidget {
+class Menu extends StatefulWidget {
    Menu({super.key});
 
+  @override
+  State<Menu> createState() => _MenuState();
+}
+
+class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,11 +48,11 @@ class Menu extends StatelessWidget {
               padding:  EdgeInsets.symmetric(horizontal: 10),
               child: Row(
                 children: [
-                  _buildCategory('Todos', false),
-                  _buildCategory('Res', false),
-                  _buildCategory('Arrachera', false),
-                  _buildCategory('Tasajo', false),
-                  _buildCategory('Paquetes', true),
+                  Categoria('Todos', false),
+                  Categoria('Paquetes', true),
+                  Categoria('Res', false),
+                  Categoria('Arrachera', false),
+                  Categoria('Tasajo', false),
                 ],
               ),
             ),
@@ -61,11 +66,13 @@ class Menu extends StatelessWidget {
               crossAxisSpacing: 20,
               childAspectRatio: 0.65,
               children: [
-                _buildMenuCard('assets/Menu1.jpg'),
-                _buildMenuCard('assets/Menu2.jpg'),
-                _buildMenuCard('assets/Menu3.jpg'),
-                _buildMenuCard('assets/Menu4.jpg'),
-              ],
+                Paquetes('assets/Destacado1.jpg',"Paquete Individual", "\105"),
+                Paquetes('assets/Destacado2.jpg',"Paquete 1", "\180"),
+                Paquetes('assets/Paquete3.jpg',"Paquete 2", "\210"),
+                Paquetes('assets/Menu4.jpg',"Paquete 3", "\330"),
+                Paquetes('assets/Destacado1.jpg',"Paquete Familiar", "\355"),
+
+          ],
             ),
           ),
         ],
@@ -73,18 +80,18 @@ class Menu extends StatelessWidget {
     );
   }
 
-  Widget _buildCategory(String title, bool isSelected) {
+  Widget Categoria(String titulo, bool seleccionado) {
     return Container(
       margin:  EdgeInsets.symmetric(horizontal: 4),
       padding:  EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: isSelected ?  Color(0xFF991B1B) :  Color(0xFFFBC02D),
+        color: seleccionado ?  Color(0xFF991B1B) :  Color(0xFFFBC02D),
         border: Border.all(color: Colors.black, width: 1.5),
       ),
       child: Text(
-        title,
+        titulo,
         style: TextStyle(
-          color: isSelected ? Colors.white : Colors.black,
+          color: seleccionado ? Colors.white : Colors.black,
           fontWeight: FontWeight.bold,
           fontSize: 16,
         ),
@@ -92,7 +99,7 @@ class Menu extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuCard(String imageAsset) {
+  Widget Paquetes(String imagen, String titulo, String precio) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -104,16 +111,11 @@ class Menu extends StatelessWidget {
           Expanded(
             child: Container(
               width: double.infinity,
-              decoration: BoxDecoration(
-                border:  Border(bottom: BorderSide(color: Colors.black, width: 1)),
-                image: DecorationImage(
-                  image: AssetImage(imageAsset),
-                  fit: BoxFit.cover,
-                  onError: (exception, stackTrace) {},
-                ),
+              decoration:  BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.black, width: 1)),
               ),
-              child: Image.network(
-                'https://via.placeholder.com/200',
+              child: Image.asset(
+                imagen,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) =>  Center(child: Icon(Icons.restaurant)),
               ),
@@ -124,12 +126,11 @@ class Menu extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(height: 12, width: 100, color: Colors.grey[300]),
-                 SizedBox(height: 5),
+
                 Container(height: 12, width: 80, color: Colors.grey[300]),
-                 SizedBox(height: 10),
                  Text(
-                  '\$XXX / Kg',
+                 '\ $titulo \n '
+                  '\$$precio',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                  SizedBox(height: 10),
