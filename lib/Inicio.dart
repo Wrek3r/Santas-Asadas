@@ -116,21 +116,6 @@ class Inicio extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor:  Color(0xFFF58220),
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black,
-        selectedLabelStyle:  TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-        unselectedLabelStyle:  TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-        items:  [
-          BottomNavigationBarItem(icon: Icon(Icons.home, size: 30), label: 'Inicio'),
-          BottomNavigationBarItem(icon: Icon(Icons.restaurant_menu, size: 30), label: 'Menú'),
-          BottomNavigationBarItem(icon: Icon(Icons.percent, size: 30), label: 'Promos'),
-          BottomNavigationBarItem(icon: Icon(Icons.location_on, size: 30), label: 'Local'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat_bubble, size: 30), label: 'Chat'),
-        ],
-      ),
     );
   }
 
@@ -229,6 +214,7 @@ class Inicio extends StatelessWidget {
                     child:  Text(
                       'Ver',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+
                     ),
                   ),
                 ],
