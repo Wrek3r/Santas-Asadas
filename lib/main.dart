@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:santas_asadas/Inicio.dart';
 import 'package:santas_asadas/Menu.dart';
+import 'package:santas_asadas/Promos.dart';
+import 'package:santas_asadas/Local.dart';
+import 'package:santas_asadas/Chat.dart';
 
 void main() {
   runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MainScreen extends StatefulWidget {
-   MainScreen({super.key});
+   const MainScreen({super.key});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -36,6 +39,9 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _pantallas = [
      Inicio(),
      Menu(),
+    const Promos(),
+    const Local(),
+    const Chat(),
   ];
 
   void _onItemTapped(int index) {
