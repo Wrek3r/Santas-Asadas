@@ -17,7 +17,7 @@ class MenuItem {
 }
 
 class Menu extends StatefulWidget {
-   Menu({super.key});
+  Menu({super.key});
 
   @override
   State<Menu> createState() => _MenuState();
@@ -32,35 +32,40 @@ class _MenuState extends State<Menu> {
       titulo: "Paquete Individual",
       precio: "105",
       categoria: "Paquetes",
-      descripcion: "• 1/4 Carne Asada\n• 1 Pieza de Chorizo Corona\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.",
+      descripcion:
+          "• 1/4 Carne Asada\n• 1 Pieza de Chorizo Corona\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.",
     ),
     MenuItem(
       imagen: 'assets/Paquetes/Paquete2.jpg',
       titulo: "Paquete 1",
       precio: "180",
       categoria: "Paquetes",
-      descripcion: "• 1/2 Carne Asada\n• 1 Pieza de Chorizo Corona\n• 1 Quesadilla\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.",
+      descripcion:
+          "• 1/2 Carne Asada\n• 1 Pieza de Chorizo Corona\n• 1 Quesadilla\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.",
     ),
     MenuItem(
       imagen: 'assets/Paquetes/Paquete3.jpg',
       titulo: "Paquete 2",
       precio: "210",
       categoria: "Paquetes",
-      descripcion: "• 1/2 Kg de Tasajo\n• 1 Pieza de Chorizo Corona\n• 2 Quesadillas\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.",
+      descripcion:
+          "• 1/2 Kg de Tasajo\n• 1 Pieza de Chorizo Corona\n• 2 Quesadillas\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.",
     ),
     MenuItem(
       imagen: 'assets/LandingFoto.jpg',
       titulo: "Paquete 3",
       precio: "330",
       categoria: "Paquetes",
-      descripcion: "• 3/4 Kg de Carne Asada\n• 2 Piezas de Chorizo Corona\n• 2 Quesadillas\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.",
+      descripcion:
+          "• 3/4 Kg de Carne Asada\n• 2 Piezas de Chorizo Corona\n• 2 Quesadillas\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.",
     ),
     MenuItem(
-      imagen: 'assets/Paquete1.jpg',
+      imagen: 'assets/Paquetes/paquetefamiliar.jpg',
       titulo: "Paquete Familiar",
       precio: "355",
       categoria: "Paquetes",
-      descripcion: "• 1 Kg Arrachera muy al estilo de las Santas Asadas\n• 2 Piezas de Chorizo Corona\n• 2 Quesadillas\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.",
+      descripcion:
+          "• 1 Kg Arrachera muy al estilo de las Santas Asadas\n• 2 Piezas de Chorizo Corona\n• 2 Quesadillas\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.",
     ),
 
     MenuItem(
@@ -68,28 +73,32 @@ class _MenuState extends State<Menu> {
       titulo: "Kilo de Carne Asada",
       precio: "285",
       categoria: "Kilos",
-      descripcion: "Un kilo de nuestra tradicional carne asada al carbón.\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.",
+      descripcion:
+          "Un kilo de nuestra tradicional carne asada al carbón.\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.",
     ),
     MenuItem(
       imagen: 'assets/LandingFoto.jpg',
       titulo: "Kilo de Arrachera",
       precio: "285",
       categoria: "Kilos",
-      descripcion: "Corte muy suave y de buen sabor, prácticamente libre de grasa.\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.",
+      descripcion:
+          "Corte muy suave y de buen sabor, prácticamente libre de grasa.\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.",
     ),
     MenuItem(
-      imagen: 'assets/Paquete2.jpg',
+      imagen: 'assets/Paquetes/papaasadanatural.jpg',
       titulo: "Papa Rellena Natural",
       precio: "75",
       categoria: "Complementos",
-      descripcion: "El sabor de nuestras papas al carbón, el complemento perfecto para tu carnita asada.",
+      descripcion:
+          "El sabor de nuestras papas al carbón, el complemento perfecto para tu carnita asada.",
     ),
     MenuItem(
-      imagen: 'assets/Paquete1.jpg',
+      imagen: 'assets/Paquetes/papamixta.jpg',
       titulo: "Papa Rellena Mixta",
       precio: "85",
       categoria: "Complementos",
-      descripcion: "Deliciosa papa asada con carne a elegir: Arrachera, Asada, Chorizo o Mixta.",
+      descripcion:
+          "Deliciosa papa asada con carne a elegir: Arrachera, Asada, Chorizo o Mixta.",
     ),
   ];
 
@@ -97,18 +106,20 @@ class _MenuState extends State<Menu> {
   Widget build(BuildContext context) {
     List<MenuItem> itemsFiltrados = _categoriaSeleccionada == 'Todos'
         ? _todosLosItems
-        : _todosLosItems.where((item) => item.categoria == _categoriaSeleccionada).toList();
+        : _todosLosItems
+              .where((item) => item.categoria == _categoriaSeleccionada)
+              .toList();
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  Color(0xFFF97316),
+        backgroundColor: Color(0xFFF97316),
         elevation: 0,
         toolbarHeight: 70,
         leadingWidth: 80,
         leading: Padding(
-          padding:  EdgeInsets.only(left: 10.0),
+          padding: EdgeInsets.only(left: 10.0),
           child: Container(
-            decoration:  BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white,
               image: DecorationImage(
@@ -120,9 +131,9 @@ class _MenuState extends State<Menu> {
         ),
         actions: [
           Padding(
-            padding:  EdgeInsets.only(right: 15.0),
+            padding: EdgeInsets.only(right: 15.0),
             child: IconButton(
-              icon:  Icon(Icons.menu, color: Colors.black, size: 40),
+              icon: Icon(Icons.menu, color: Colors.black, size: 40),
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
           ),
@@ -131,27 +142,26 @@ class _MenuState extends State<Menu> {
       body: Column(
         children: [
           Container(
-            padding:  EdgeInsets.symmetric(vertical: 10),
+            padding: EdgeInsets.symmetric(vertical: 10),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              padding:  EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               child: Row(
                 children: [
                   Categoria('Todos'),
                   Categoria('Paquetes'),
                   Categoria('Kilos'),
                   Categoria('Complementos'),
-
                 ],
               ),
             ),
           ),
           Expanded(
             child: itemsFiltrados.isEmpty
-                ?  Center(child: Text("No hay platillos en esta categoría"))
+                ? Center(child: Text("No hay platillos en esta categoría"))
                 : GridView.builder(
-                    padding:  EdgeInsets.all(20),
-                    gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                    padding: EdgeInsets.all(20),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,
@@ -177,10 +187,10 @@ class _MenuState extends State<Menu> {
         });
       },
       child: Container(
-        margin:  EdgeInsets.symmetric(horizontal: 4),
-        padding:  EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        margin: EdgeInsets.symmetric(horizontal: 4),
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color: seleccionado ?  Color(0xFF991B1B) :  Color(0xFFFBC02D),
+          color: seleccionado ? Color(0xFF991B1B) : Color(0xFFFBC02D),
           border: Border.all(color: Colors.black, width: 1.5),
         ),
         child: Text(
@@ -207,40 +217,46 @@ class _MenuState extends State<Menu> {
           Expanded(
             child: Container(
               width: double.infinity,
-              decoration:  BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.black, width: 1)),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: Colors.black, width: 1),
+                ),
               ),
               child: Image.asset(
                 item.imagen,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>  Center(child: Icon(Icons.restaurant)),
+                errorBuilder: (context, error, stackTrace) =>
+                    Center(child: Icon(Icons.restaurant)),
               ),
             ),
           ),
           Padding(
-            padding:  EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(height: 12, width: 80, color: Colors.grey[300]),
                 Text(
                   '${item.titulo}\n\$${item.precio}',
-                  style:  TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                 SizedBox(height: 10),
+                SizedBox(height: 10),
                 GestureDetector(
                   onTap: () => _mostrarDetalle(item),
                   child: Container(
-                    padding:  EdgeInsets.symmetric(horizontal: 12, vertical: 3),
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 3),
                     decoration: BoxDecoration(
-                      color:  Color(0xFFFBC02D),
+                      color: Color(0xFFFBC02D),
                       border: Border.all(color: Colors.black, width: 1.5),
                     ),
-                    child:  Text(
+                    child: Text(
                       'Ver',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
                     ),
                   ),
                 ),
@@ -257,14 +273,14 @@ class _MenuState extends State<Menu> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor:  Color(0xFFF58220),
+          backgroundColor: Color(0xFFF58220),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
-            side:  BorderSide(color: Colors.black, width: 2),
+            side: BorderSide(color: Colors.black, width: 2),
           ),
           title: Text(
             item.titulo,
-            style:  TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -276,27 +292,27 @@ class _MenuState extends State<Menu> {
                   item.imagen,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) =>
-                       Icon(Icons.restaurant, size: 50),
+                      Icon(Icons.restaurant, size: 50),
                 ),
               ),
-               SizedBox(height: 15),
+              SizedBox(height: 15),
               Text(
                 "Precio: \$${item.precio}",
-                style:  TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-               SizedBox(height: 10),
-              Text(
-                item.descripcion,
-                style:  TextStyle(fontSize: 16),
-              ),
+              SizedBox(height: 10),
+              Text(item.descripcion, style: TextStyle(fontSize: 16)),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child:  Text(
+              child: Text(
                 "Cerrar",
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],
