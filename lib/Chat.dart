@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Chat extends StatefulWidget {
-  const Chat({super.key});
+   Chat({super.key});
 
   @override
   State<Chat> createState() => _ChatState();
@@ -21,7 +21,7 @@ class _ChatState extends State<Chat> {
     } else {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('No se pudo realizar la llamada')),
+           SnackBar(content: Text('No se pudo realizar la llamada')),
         );
       }
     }
@@ -30,7 +30,7 @@ class _ChatState extends State<Chat> {
   void _sendWhatsAppMessage() async {
     if (_pedidoController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Por favor, escribe tu pedido primero.')),
+         SnackBar(content: Text('Por favor, escribe tu pedido primero.')),
       );
       return;
     }
@@ -61,7 +61,7 @@ class _ChatState extends State<Chat> {
     } else {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('No se pudo abrir WhatsApp')),
+           SnackBar(content: Text('No se pudo abrir WhatsApp')),
         );
       }
     }
@@ -71,24 +71,24 @@ class _ChatState extends State<Chat> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF97316),
+        backgroundColor:  Color(0xFFF97316),
         elevation: 0,
         toolbarHeight: 70,
         leadingWidth: 80,
         leading: Padding(
-          padding: const EdgeInsets.only(left: 10.0),
+          padding:  EdgeInsets.only(left: 10.0),
           child: CircleAvatar(
             backgroundColor: Colors.white,
-            child: Image.asset('assets/Logo.png', errorBuilder: (_,__,___) => const Icon(Icons.restaurant)),
+            child: Image.asset('assets/Logo.png', errorBuilder: (_,__,___) =>  Icon(Icons.restaurant)),
           ),
         ),
-        title: const Text('Realizar Pedido', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+        title:  Text('Realizar Pedido', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
         centerTitle: true,
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 15.0),
+            padding:  EdgeInsets.only(right: 15.0),
             child: IconButton(
-              icon: const Icon(Icons.menu, color: Colors.black, size: 40),
+              icon:  Icon(Icons.menu, color: Colors.black, size: 40),
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
           ),
@@ -96,25 +96,23 @@ class _ChatState extends State<Chat> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(25.0),
+          padding:  EdgeInsets.all(25.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Center(
+               Center(
                 child: Icon(Icons.shopping_basket_outlined, size: 80, color: Color(0xFF991B1B)),
               ),
-              const SizedBox(height: 20),
-              const Center(
+               SizedBox(height: 20),
+               Center(
                 child: Text(
                   '¿Cómo quieres pedir?',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
               ),
-              const SizedBox(height: 30),
+               SizedBox(height: 30),
               
-              // Vista inicial: Botones de opción
               if (!_mostrarFormulario) ...[
-                // Botón para desplegar el formulario de pedido
                 SizedBox(
                   width: double.infinity,
                   height: 65,
@@ -124,32 +122,31 @@ class _ChatState extends State<Chat> {
                         _mostrarFormulario = true;
                       });
                     },
-                    icon: const Icon(Icons.edit_note_rounded, size: 30, color: Colors.white),
-                    label: const Text(
+                    icon:  Icon(Icons.edit_note_rounded, size: 30, color: Colors.white),
+                    label:  Text(
                       'ESCRIBIR MI PEDIDO POR WHATSAPP',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF25D366), 
+                      backgroundColor:  Color(0xFF25D366), 
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
-                        side: const BorderSide(color: Colors.black, width: 2),
+                        side:  BorderSide(color: Colors.black, width: 2),
                       ),
                       elevation: 5,
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                 SizedBox(height: 20),
                 
-                // Botón de Llamada directa
                 SizedBox(
                   width: double.infinity,
                   height: 65,
                   child: ElevatedButton.icon(
                     onPressed: _llamarTelefono,
-                    icon: const Icon(Icons.phone, color: Colors.black, size: 28),
-                    label: const Text(
+                    icon:  Icon(Icons.phone, color: Colors.black, size: 28),
+                    label:  Text(
                       'LLAMAR POR TELÉFONO',
                       style: TextStyle(
                         fontSize: 14,
@@ -158,10 +155,10 @@ class _ChatState extends State<Chat> {
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFBC02D),
+                      backgroundColor:  Color(0xFFFBC02D),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
-                        side: const BorderSide(color: Colors.black, width: 2),
+                        side:  BorderSide(color: Colors.black, width: 2),
                       ),
                       elevation: 5,
                     ),
@@ -170,47 +167,47 @@ class _ChatState extends State<Chat> {
               ],
 
               if (_mostrarFormulario) ...[
-                const Text(
+                 Text(
                   'Escribe tu pedido detalladamente:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
-                const SizedBox(height: 10),
+                 SizedBox(height: 10),
                 TextField(
                   controller: _pedidoController,
                   maxLines: 6,
                   autofocus: true,
-                  style: const TextStyle(fontWeight: FontWeight.w500),
+                  style:  TextStyle(fontWeight: FontWeight.w500),
                   decoration: InputDecoration(
                     hintText: 'Ej: kg de arrachera...',
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
-                      borderSide: const BorderSide(color: Colors.black, width: 2),
+                      borderSide:  BorderSide(color: Colors.black, width: 2),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
-                      borderSide: const BorderSide(color: Color(0xFF991B1B), width: 2),
+                      borderSide:  BorderSide(color: Color(0xFF991B1B), width: 2),
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                 SizedBox(height: 20),
                 
                 SizedBox(
                   width: double.infinity,
                   height: 60,
                   child: ElevatedButton.icon(
                     onPressed: _sendWhatsAppMessage,
-                    icon: const Icon(Icons.send_rounded, size: 28, color: Colors.white),
-                    label: const Text(
+                    icon:  Icon(Icons.send_rounded, size: 28, color: Colors.white),
+                    label:  Text(
                       'ENVIAR AHORA POR WHATSAPP',
                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF25D366), 
+                      backgroundColor:  Color(0xFF25D366), 
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
-                        side: const BorderSide(color: Colors.black, width: 2),
+                        side:  BorderSide(color: Colors.black, width: 2),
                       ),
                       elevation: 5,
                     ),
@@ -225,14 +222,15 @@ class _ChatState extends State<Chat> {
                         _pedidoController.clear();
                       });
                     },
-                    child: const Text(
+                    child:  Text(
                       'Cancelar',
                       style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
               ],
-              const SizedBox(height: 20),
+               SizedBox(height: 20),
+               SizedBox(height: 20),
             ],
           ),
         ),

@@ -4,7 +4,7 @@ import 'main.dart';
 
 
 class Login extends StatefulWidget {
-  const Login({super.key});
+   Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();
@@ -29,26 +29,26 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF58220),
+      backgroundColor:  Color(0xFFF58220),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding:  EdgeInsets.symmetric(horizontal: 30.0),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
-                const SizedBox(height: 80),
+                 SizedBox(height: 80),
                 CircleAvatar(
                   radius: 60,
                   backgroundColor: Colors.white,
                   child: Image.asset(
                     'assets/Logo.png',
                     height: 90,
-                    errorBuilder: (_, __, ___) => const Icon(Icons.restaurant, size: 60, color: Color(0xFF991B1B)),
+                    errorBuilder: (_, __, ___) =>  Icon(Icons.restaurant, size: 60, color: Color(0xFF991B1B)),
                   ),
                 ),
-                const SizedBox(height: 20),
-                const Text(
+                 SizedBox(height: 20),
+                 Text(
                   'DATOS DE ENVÍO',
                   style: TextStyle(
                     fontSize: 24,
@@ -57,11 +57,11 @@ class _LoginState extends State<Login> {
                     letterSpacing: 1.5,
                   ),
                 ),
-                const Text(
+                 Text(
                   'Regístrate para pedir más rápido',
                   style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 40),
+                 SizedBox(height: 40),
 
                 _buildTextField(
                   controller: _nombreController,
@@ -69,7 +69,7 @@ class _LoginState extends State<Login> {
                   icon: Icons.person,
                   hint: 'Ej. Juan Pérez',
                 ),
-                const SizedBox(height: 20),
+                 SizedBox(height: 20),
 
                 _buildTextField(
                   controller: _telefonoController,
@@ -78,7 +78,7 @@ class _LoginState extends State<Login> {
                   hint: '311 123 4567',
                   keyboardType: TextInputType.phone,
                 ),
-                const SizedBox(height: 20),
+                 SizedBox(height: 20),
 
                 _buildTextField(
                   controller: _direccionController,
@@ -86,7 +86,7 @@ class _LoginState extends State<Login> {
                   icon: Icons.location_on,
                   hint: 'Ej. Calle Ixtlán #123, Los Fresnos',
                 ),
-                const SizedBox(height: 20),
+                 SizedBox(height: 20),
 
                 _buildTextField(
                   controller: _referenciasController,
@@ -96,7 +96,7 @@ class _LoginState extends State<Login> {
                   maxLines: 2,
                 ),
 
-                const SizedBox(height: 40),
+                 SizedBox(height: 40),
 
                 SizedBox(
                   width: double.infinity,
@@ -108,33 +108,33 @@ class _LoginState extends State<Login> {
                         
                         if (mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('¡Datos guardados! Bienvenido.')),
+                             SnackBar(content: Text('¡Datos guardados! Bienvenido.')),
                           );
                           
                           // Navegamos al inicio reemplazando el Login
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => const Main()),
+                            MaterialPageRoute(builder: (context) =>  Main()),
                           );
                         }
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF991B1B),
+                      backgroundColor:  Color(0xFF991B1B),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
-                        side: const BorderSide(color: Colors.black, width: 2),
+                        side:  BorderSide(color: Colors.black, width: 2),
                       ),
                       elevation: 5,
                     ),
-                    child: const Text(
+                    child:  Text(
                       'COMENZAR A PEDIR',
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
-                const SizedBox(height: 50),
+                 SizedBox(height: 50),
               ],
             ),
           ),
@@ -156,31 +156,31 @@ class _LoginState extends State<Login> {
       children: [
         Text(
           label,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          style:  TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
         ),
-        const SizedBox(height: 8),
+         SizedBox(height: 8),
         TextFormField(
           controller: controller,
           keyboardType: keyboardType,
           maxLines: maxLines,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style:  TextStyle(fontWeight: FontWeight.bold),
           decoration: InputDecoration(
             hintText: hint,
             prefixIcon: Icon(icon, color: Colors.black),
             filled: true,
             fillColor: Colors.white,
-            contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+            contentPadding:  EdgeInsets.symmetric(vertical: 15, horizontal: 20),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(color: Colors.black, width: 2),
+              borderSide:  BorderSide(color: Colors.black, width: 2),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(color: Color(0xFF991B1B), width: 2),
+              borderSide:  BorderSide(color: Color(0xFF991B1B), width: 2),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(color: Colors.red, width: 2),
+              borderSide:  BorderSide(color: Colors.red, width: 2),
             ),
           ),
           validator: (value) {

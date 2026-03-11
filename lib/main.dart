@@ -7,11 +7,11 @@ import 'package:santas_asadas/Promos.dart';
 import 'package:santas_asadas/Login.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+   MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +19,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Santas Asadas',
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFFF58220),
+        scaffoldBackgroundColor:  Color(0xFFF58220),
         useMaterial3: true,
       ),
-      home: const Login(),
+      home:  Login(),
     );
   }
 }
 
 class Main extends StatefulWidget {
-  const Main({super.key});
+   Main({super.key});
 
   static _MainState? of(BuildContext context) => context.findAncestorStateOfType<_MainState>();
 
@@ -51,11 +51,11 @@ class _MainState extends State<Main> {
   }
 
   final List<Widget> _pantallas = [
-    const Inicio(),
-    const Menu(),
-    const Promos(),
-    const Local(),
-    const Chat(),
+     Inicio(),
+     Menu(),
+     Promos(),
+     Local(),
+     Chat(),
   ];
 
   @override
@@ -63,12 +63,12 @@ class _MainState extends State<Main> {
     return Scaffold(
       drawer: Drawer(
         child: Container(
-          color: const Color(0xFFF58220),
+          color:  Color(0xFFF58220),
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
-                decoration: const BoxDecoration(
+                decoration:  BoxDecoration(
                   color: Color(0xFF991B1B),
                 ),
                 child: Column(
@@ -79,7 +79,7 @@ class _MainState extends State<Main> {
                       backgroundColor: Colors.white,
                       child: Image.asset('assets/Logo.png',),
                     ),
-                    const SizedBox(height: 10),
+                     SizedBox(height: 10),
                     Text(
                       'Santas Asadas',
                       style: TextStyle(color: Colors.white70, fontSize: 14),
@@ -91,13 +91,13 @@ class _MainState extends State<Main> {
               _buildDrawerItem(Icons.history, 'Mis Pedidos', () {}),
               _buildDrawerItem(Icons.favorite, 'Favoritos', () {}),
               _buildDrawerItem(Icons.notifications, 'Notificaciones', () {}),
-              const Divider(color: Colors.black26),
+               Divider(color: Colors.black26),
               _buildDrawerItem(Icons.settings, 'Configuración', () {}),
               _buildDrawerItem(Icons.help, 'Ayuda y Soporte', () {}),
               _buildDrawerItem(Icons.logout, 'Cerrar Sesión', () {
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => const Login()),
+                  MaterialPageRoute(builder: (context) =>  Login()),
                   (route) => false,
                 );
               }),
@@ -107,7 +107,7 @@ class _MainState extends State<Main> {
       ),
       body: _pantallas[_indice],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFFF58220),
+        backgroundColor:  Color(0xFFF58220),
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.black,
@@ -115,7 +115,7 @@ class _MainState extends State<Main> {
         onTap: (index) {
           setState(() => _indice = index);
         },
-        items: const [
+        items:  [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Inicio"),
           BottomNavigationBarItem(icon: Icon(Icons.restaurant_menu), label: "Menú"),
           BottomNavigationBarItem(icon: Icon(Icons.percent), label: "Promos"),
@@ -129,7 +129,7 @@ class _MainState extends State<Main> {
   Widget _buildDrawerItem(IconData icon, String title, VoidCallback onTap) {
     return ListTile(
       leading: Icon(icon, color: Colors.black),
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+      title: Text(title, style:  TextStyle(fontWeight: FontWeight.bold)),
       onTap: onTap,
     );
   }

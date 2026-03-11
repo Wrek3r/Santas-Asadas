@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:santas_asadas/main.dart';
 
 class Inicio extends StatefulWidget {
-  const Inicio({super.key});
+   Inicio({super.key});
 
   @override
   State<Inicio> createState() => _InicioState();
@@ -13,12 +13,12 @@ class _InicioState extends State<Inicio> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF97316),
+        backgroundColor:  Color(0xFFF97316),
         elevation: 0,
         toolbarHeight: 70,
         leadingWidth: 80,
         leading: Padding(
-          padding: const EdgeInsets.only(left: 10.0),
+          padding:  EdgeInsets.only(left: 10.0),
           child: CircleAvatar(
             backgroundColor: Colors.white,
             child: Image.asset('assets/Logo.png',),
@@ -26,9 +26,9 @@ class _InicioState extends State<Inicio> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 15.0),
+            padding:  EdgeInsets.only(right: 15.0),
             child: IconButton(
-              icon: const Icon(Icons.menu, color: Colors.black, size: 40),
+              icon:  Icon(Icons.menu, color: Colors.black, size: 40),
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
           ),
@@ -42,7 +42,7 @@ class _InicioState extends State<Inicio> {
                 Container(
                   width: double.infinity,
                   height: 380,
-                  decoration: const BoxDecoration(
+                  decoration:  BoxDecoration(
                     color: Color(0xFF1A1A1A),
                     image: DecorationImage(
                       image: AssetImage('assets/LandingFoto.jpg'),
@@ -67,7 +67,7 @@ class _InicioState extends State<Inicio> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                       Text(
                         'SANTAS ASADAS',
                         style: TextStyle(
                           color: Color(0xFFFBC02D),
@@ -76,7 +76,7 @@ class _InicioState extends State<Inicio> {
                           fontStyle: FontStyle.italic,
                         ),
                       ),
-                      const Text(
+                       Text(
                         'DONDE EL FUEGO SE\nCONVIERTE EN SABOR 🔥',
                         style: TextStyle(
                           color: Colors.white,
@@ -89,36 +89,35 @@ class _InicioState extends State<Inicio> {
                 ),
               ],
             ),
-            const SizedBox(height: 25),
+             SizedBox(height: 25),
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding:  EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
                   Expanded(
                     child: _buildMainButton(
                         context,
                         'Ver Menú',
-                        const Color(0xFF991B1B),
+                         Color(0xFF991B1B),
                         Colors.white,
                         () => Main.of(context)?.cambiarIndice(1)),
                   ),
-                  const SizedBox(width: 15),
+                   SizedBox(width: 15),
                   Expanded(
                     child: _buildMainButton(
                         context,
                         'Pedido',
-                        const Color(0xFFFBC02D),
+                         Color(0xFFFBC02D),
                         Colors.black,
                         () => Main.of(context)?.cambiarIndice(4)),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 35),
+             SizedBox(height: 35),
 
-            // Sección Destacados
-            const Padding(
+             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Align(
                 alignment: Alignment.centerLeft,
@@ -128,9 +127,9 @@ class _InicioState extends State<Inicio> {
                 ),
               ),
             ),
-            const SizedBox(height: 15),
+             SizedBox(height: 15),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding:  EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -142,7 +141,7 @@ class _InicioState extends State<Inicio> {
                       '• 1 Kg Arrachera muy al estilo de las Santas Asadas\n• 2 Piezas de Chorizo Corona\n• 2 Quesadillas\n\nIncluye: Tortillas, Cebollitas, Chile toreado y Salsa.',
                     ),
                   ),
-                  const SizedBox(width: 15),
+                   SizedBox(width: 15),
                   Expanded(
                     child: _buildCardMejorada(
                       'Paquete Individual',
@@ -154,7 +153,7 @@ class _InicioState extends State<Inicio> {
                 ],
               ),
             ),
-            const SizedBox(height: 40),
+             SizedBox(height: 40),
           ],
         ),
       ),
@@ -171,7 +170,7 @@ class _InicioState extends State<Inicio> {
           borderRadius: BorderRadius.circular(15),
           border: Border.all(color: Colors.black, width: 2),
           boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4, offset: const Offset(0, 4)),
+            BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4, offset:  Offset(0, 4)),
           ],
         ),
         child: Center(
@@ -191,49 +190,48 @@ class _InicioState extends State<Inicio> {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.black, width: 1),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5)),
+          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset:  Offset(0, 5)),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(19)),
+            borderRadius:  BorderRadius.vertical(top: Radius.circular(19)),
             child: Image.asset(
               img,
               height: 120,
               width: double.infinity,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => const SizedBox(height: 120, child: Icon(Icons.restaurant)),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding:  EdgeInsets.all(12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   titulo,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  style:  TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 4),
+                 SizedBox(height: 4),
                 Text(
                   '\$$precio',
-                  style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Color(0xFF991B1B)),
+                  style:  TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Color(0xFF991B1B)),
                 ),
-                const SizedBox(height: 10),
+                 SizedBox(height: 10),
                 GestureDetector(
                   onTap: () => _mostrarDetalle(titulo, precio, img, descripcion),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    padding:  EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFBC02D),
+                      color:  Color(0xFFFBC02D),
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.black, width: 1.5),
                     ),
-                    child: const Text(
+                    child:  Text(
                       'Ver',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                     ),
@@ -252,14 +250,14 @@ class _InicioState extends State<Inicio> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: const Color(0xFFF58220),
+          backgroundColor:  Color(0xFFF58220),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
-            side: const BorderSide(color: Colors.black, width: 2),
+            side:  BorderSide(color: Colors.black, width: 2),
           ),
           title: Text(
             titulo,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style:  TextStyle(fontWeight: FontWeight.bold),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -270,25 +268,25 @@ class _InicioState extends State<Inicio> {
                 child: Image.asset(
                   imagen,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.restaurant, size: 50),
+                  errorBuilder: (context, error, stackTrace) =>  Icon(Icons.restaurant, size: 50),
                 ),
               ),
-              const SizedBox(height: 15),
+               SizedBox(height: 15),
               Text(
                 "Precio: \$$precio",
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style:  TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 10),
+               SizedBox(height: 10),
               Text(
                 descripcion,
-                style: const TextStyle(fontSize: 16),
+                style:  TextStyle(fontSize: 16),
               ),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text(
+              child:  Text(
                 "Cerrar",
                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),

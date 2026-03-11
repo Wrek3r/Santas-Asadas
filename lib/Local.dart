@@ -3,17 +3,17 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Local extends StatefulWidget {
-  const Local({super.key});
+   Local({super.key});
 
   @override
   State<Local> createState() => _LocalState();
 }
 
 class _LocalState extends State<Local> {
-  static const LatLng _centroMapa = LatLng(21.4737677, -104.8766323);
+  static  LatLng _centroMapa = LatLng(21.4737677, -104.8766323);
   String? _localSeleccionado;
 
-  static const CameraPosition _posicionCamara = CameraPosition(
+  static  CameraPosition _posicionCamara = CameraPosition(
     target: _centroMapa,
     zoom: 16.0,
   );
@@ -63,18 +63,18 @@ class _LocalState extends State<Local> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF58220),
+        backgroundColor:  Color(0xFFF58220),
         elevation: 0,
         toolbarHeight: 70,
         leadingWidth: 80,
         leading: Padding(
-          padding: const EdgeInsets.only(left: 10.0),
+          padding:  EdgeInsets.only(left: 10.0),
           child: CircleAvatar(
             backgroundColor: Colors.white,
             child: Image.asset('assets/Logo.png'),
           ),
         ),
-        title: const Text('Ubicación', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+        title:  Text('Ubicación', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
         centerTitle: true,
       ),
       body: Stack(
@@ -87,7 +87,7 @@ class _LocalState extends State<Local> {
             zoomControlsEnabled: false,
           ),
           AnimatedPositioned(
-            duration: const Duration(milliseconds: 300),
+            duration:  Duration(milliseconds: 300),
             bottom: _localSeleccionado != null ? 0 : -400,
             left: 0,
             right: 0,
@@ -99,7 +99,7 @@ class _LocalState extends State<Local> {
   }
 
   Widget _buildNegocioDetalle() {
-    if (_localSeleccionado == null) return const SizedBox();
+    if (_localSeleccionado == null) return  SizedBox();
 
     final local = _datosNegocio.firstWhere(
       (l) => l['id'] == _localSeleccionado,
@@ -108,7 +108,7 @@ class _LocalState extends State<Local> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: const BorderRadius.only(
+        borderRadius:  BorderRadius.only(
           topLeft: Radius.circular(25),
           topRight: Radius.circular(25),
         ),
@@ -116,7 +116,7 @@ class _LocalState extends State<Local> {
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
             blurRadius: 15,
-            offset: const Offset(0, -4),
+            offset:  Offset(0, -4),
           ),
         ],
       ),
@@ -124,7 +124,7 @@ class _LocalState extends State<Local> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            margin: const EdgeInsets.symmetric(vertical: 12),
+            margin:  EdgeInsets.symmetric(vertical: 12),
             height: 4,
             width: 40,
             decoration: BoxDecoration(
@@ -133,7 +133,7 @@ class _LocalState extends State<Local> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 25),
+            padding:  EdgeInsets.fromLTRB(20, 0, 20, 25),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -142,36 +142,36 @@ class _LocalState extends State<Local> {
                   children: [
                     Text(
                       local['nombre'],
-                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style:  TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     IconButton(
                       onPressed: () => setState(() => _localSeleccionado = null),
-                      icon: const Icon(Icons.close, color: Colors.grey),
+                      icon:  Icon(Icons.close, color: Colors.grey),
                     )
                   ],
                 ),
-                const SizedBox(height: 10),
-                _buildInfoRow(Icons.location_on, local['direccion'], color: const Color(0xFF991B1B)),
-                const SizedBox(height: 8),
+                 SizedBox(height: 10),
+                _buildInfoRow(Icons.location_on, local['direccion'], color:  Color(0xFF991B1B)),
+                 SizedBox(height: 8),
                 _buildInfoRow(Icons.access_time, local['horario']),
-                const SizedBox(height: 20),
+                 SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
                       child: _buildActionButton(
                         'LLAMAR',
                         Icons.phone,
-                        const Color(0xFFFBC02D),
+                         Color(0xFFFBC02D),
                         Colors.black,
                         () => _hacerLlamada(local['telefonos'][0]),
                       ),
                     ),
-                    const SizedBox(width: 15),
+                     SizedBox(width: 15),
                     Expanded(
                       child: _buildActionButton(
                         'RUTA',
                         Icons.directions,
-                        const Color(0xFF991B1B),
+                         Color(0xFF991B1B),
                         Colors.white,
                         _abrirMapaExterno
                       ),
@@ -190,11 +190,11 @@ class _LocalState extends State<Local> {
     return Row(
       children: [
         Icon(icon, size: 20, color: color),
-        const SizedBox(width: 10),
+         SizedBox(width: 10),
         Expanded(
           child: Text(
             text,
-            style: const TextStyle(fontSize: 14, color: Colors.black87),
+            style:  TextStyle(fontSize: 14, color: Colors.black87),
           ),
         ),
       ],
@@ -205,7 +205,7 @@ class _LocalState extends State<Local> {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding:  EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
           color: bgColor,
           borderRadius: BorderRadius.circular(12),
@@ -215,7 +215,7 @@ class _LocalState extends State<Local> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, color: textColor, size: 20),
-            const SizedBox(width: 8),
+             SizedBox(width: 8),
             Text(
               label,
               style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 16),
