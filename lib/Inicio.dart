@@ -7,7 +7,7 @@ class Inicio extends StatefulWidget {
   @override
   State<Inicio> createState() => _InicioState();
 }
-
+// Pantalla de inicio con imagen de fondo, botones principales y sección de favoritos
 class _InicioState extends State<Inicio> {
   @override
   Widget build(BuildContext context) {
