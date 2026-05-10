@@ -1,36 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:santas_asadas/Chat.dart';
 import 'package:santas_asadas/Inicio.dart';
 import 'package:santas_asadas/Local.dart';
 import 'package:santas_asadas/Menu.dart';
 import 'package:santas_asadas/Promos.dart';
 import 'package:santas_asadas/Login.dart';
+import 'providers/CartProvider.dart';
 
 void main() {
-  runApp( MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Santas Asadas',
-      theme: ThemeData(
-        scaffoldBackgroundColor:  Color(0xFFF58220),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => CartProvider())],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Santas Asadas',
+        theme: ThemeData(
+          scaffoldBackgroundColor: Color(0xFFF58220),
+          useMaterial3: true,
+        ),
+        home: Login(),
+        routes: {
+          '/menu': (context) => Menu(),
+          '/chat': (context) => Chat(),
+          '/inicio': (context) => Inicio(),
+          '/local': (context) => Local(),
+          '/promos': (context) => Promos(),
+        },
       ),
-      home:  Login(),
     );
   }
 }
 
 class Main extends StatefulWidget {
-   Main({super.key});
+  Main({super.key});
 
-  static _MainState? of(BuildContext context) => context.findAncestorStateOfType<_MainState>();
+  static _MainState? of(BuildContext context) =>
+      context.findAncestorStateOfType<_MainState>();
 
   @override
   State<Main> createState() => _MainState();
@@ -50,36 +63,28 @@ class _MainState extends State<Main> {
     });
   }
 
-  final List<Widget> _pantallas = [
-     Inicio(),
-     Menu(),
-     Promos(),
-     Local(),
-     Chat(),
-  ];
+  final List<Widget> _pantallas = [Inicio(), Menu(), Promos(), Local(), Chat()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
         child: Container(
-          color:  Color(0xFFF58220),
+          color: Color(0xFFF58220),
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
-                decoration:  BoxDecoration(
-                  color: Color(0xFF991B1B),
-                ),
+                decoration: BoxDecoration(color: Color(0xFF991B1B)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CircleAvatar(
                       radius: 40,
                       backgroundColor: Colors.white,
-                      child: Image.asset('assets/Logo.png',),
+                      child: Image.asset('assets/Logo.png'),
                     ),
-                     SizedBox(height: 10),
+                    SizedBox(height: 10),
                     Text(
                       'Santas Asadas',
                       style: TextStyle(color: Colors.white70, fontSize: 14),
@@ -91,13 +96,13 @@ class _MainState extends State<Main> {
               _buildDrawerItem(Icons.history, 'Mis Pedidos', () {}),
               _buildDrawerItem(Icons.favorite, 'Favoritos', () {}),
               _buildDrawerItem(Icons.notifications, 'Notificaciones', () {}),
-               Divider(color: Colors.black26),
+              Divider(color: Colors.black26),
               _buildDrawerItem(Icons.settings, 'Configuración', () {}),
               _buildDrawerItem(Icons.help, 'Ayuda y Soporte', () {}),
               _buildDrawerItem(Icons.logout, 'Cerrar Sesión', () {
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) =>  Login()),
+                  MaterialPageRoute(builder: (context) => Login()),
                   (route) => false,
                 );
               }),
@@ -107,7 +112,7 @@ class _MainState extends State<Main> {
       ),
       body: _pantallas[_indice],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor:  Color(0xFFF58220),
+        backgroundColor: Color(0xFFF58220),
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.black,
@@ -115,11 +120,17 @@ class _MainState extends State<Main> {
         onTap: (index) {
           setState(() => _indice = index);
         },
-        items:  [
+        items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Inicio"),
-          BottomNavigationBarItem(icon: Icon(Icons.restaurant_menu), label: "Menú"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.restaurant_menu),
+            label: "Menú",
+          ),
           BottomNavigationBarItem(icon: Icon(Icons.percent), label: "Promos"),
-          BottomNavigationBarItem(icon: Icon(Icons.location_on), label: "Local"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.location_on),
+            label: "Local",
+          ),
           BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label: 'Chat'),
         ],
       ),
@@ -129,7 +140,7 @@ class _MainState extends State<Main> {
   Widget _buildDrawerItem(IconData icon, String title, VoidCallback onTap) {
     return ListTile(
       leading: Icon(icon, color: Colors.black),
-      title: Text(title, style:  TextStyle(fontWeight: FontWeight.bold)),
+      title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
       onTap: onTap,
     );
   }
