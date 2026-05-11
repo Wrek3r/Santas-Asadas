@@ -56,11 +56,10 @@ class _ChatState extends State<Chat> {
 
       final order = OrderModel(
         items: cart.items,
-        total: cart.totalAmount,
-        customerName: userName,
-        customerPhone: phone,
-        deliveryAddress: address,
-        notes: notes,
+        clienteNombre: userName,
+        clienteTelefono: phone,
+        direccionEntrega: address,
+        notas: notes,
       );
 
       // Enviar a API (opcional, ya que se envía por WhatsApp)
@@ -87,17 +86,17 @@ class _ChatState extends State<Chat> {
     String itemsText = order.items
         .map(
           (item) =>
-              '• ${item.product.title} x${item.quantity} - \$${item.total.toStringAsFixed(2)}',
+              '• ${item.productTitle} x${item.quantity} - \$${item.subtotal.toStringAsFixed(2)}',
         )
         .join('\n');
 
     String mensaje =
-        "¡Hola Santas Asadas! 🔥 Nuevo pedido de ${order.customerName}.\n\n"
+        "¡Hola Santas Asadas! 🔥 Nuevo pedido de ${order.clienteNombre}.\n\n"
         "📦 PRODUCTOS:\n$itemsText\n\n"
         "💰 TOTAL: \$${order.total.toStringAsFixed(2)}\n\n"
-        "📍 DIRECCIÓN DE ENTREGA: ${order.deliveryAddress}\n"
-        "📞 TELÉFONO: ${order.customerPhone}\n"
-        "📝 NOTAS: ${order.notes.isNotEmpty ? order.notes : 'Ninguna'}";
+        "📍 DIRECCIÓN DE ENTREGA: ${order.direccionEntrega}\n"
+        "📞 TELÉFONO: ${order.clienteTelefono}\n"
+        "📝 NOTAS: ${order.notas?.isNotEmpty ?? false ? order.notas : 'Ninguna'}";
 
     final Uri url = Uri.parse(
       "https://wa.me/$telefonoEstablecimiento?text=${Uri.encodeComponent(mensaje)}",
@@ -188,9 +187,9 @@ class _ChatState extends State<Chat> {
                 ...cart.items.map(
                   (item) => Card(
                     child: ListTile(
-                      title: Text(item.product.title),
+                      title: Text(item.productTitle),
                       subtitle: Text('Cantidad: ${item.quantity}'),
-                      trailing: Text('\$${item.total.toStringAsFixed(2)}'),
+                      trailing: Text('\$${item.subtotal.toStringAsFixed(2)}'),
                     ),
                   ),
                 ),

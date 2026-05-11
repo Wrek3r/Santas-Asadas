@@ -16,41 +16,55 @@ class CartProvider with ChangeNotifier {
   int get itemCount => _items.length;
 
   double get totalAmount {
-    return _items.fold(0.0, (sum, item) => sum + item.total);
+    return _items.fold(0.0, (sum, item) => sum + item.subtotal);
   }
 
-  void addItem(ProductModel product, int quantity) {
+  /// Añade un producto al carrito
+  void addItem(ProductModel product, {int quantity = 1}) {
     final existingIndex = _items.indexWhere(
-      (item) => item.product.id == product.id,
+      (item) => item.productId == product.id,
     );
 
     if (existingIndex >= 0) {
+      // Si ya existe, aumenta la cantidad
       _items[existingIndex] = OrderItem(
-        product: product,
+        productId: product.id,
+        productTitle: product.title,
         quantity: _items[existingIndex].quantity + quantity,
+        unitPrice: product.price,
       );
     } else {
-      _items.add(OrderItem(product: product, quantity: quantity));
+      // Si no existe, lo agrega
+      _items.add(
+        OrderItem(
+          productId: product.id,
+          productTitle: product.title,
+          quantity: quantity,
+          unitPrice: product.price,
+        ),
+      );
     }
     _saveCart();
     notifyListeners();
   }
 
   void removeItem(String productId) {
-    _items.removeWhere((item) => item.product.id == productId);
+    _items.removeWhere((item) => item.productId == productId);
     _saveCart();
     notifyListeners();
   }
 
   void updateQuantity(String productId, int quantity) {
-    final index = _items.indexWhere((item) => item.product.id == productId);
+    final index = _items.indexWhere((item) => item.productId == productId);
     if (index >= 0) {
       if (quantity <= 0) {
         removeItem(productId);
       } else {
         _items[index] = OrderItem(
-          product: _items[index].product,
+          productId: _items[index].productId,
+          productTitle: _items[index].productTitle,
           quantity: quantity,
+          unitPrice: _items[index].unitPrice,
         );
         _saveCart();
         notifyListeners();
@@ -64,49 +78,25 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool isInCart(String productId) {
-    return _items.any((item) => item.product.id == productId);
-  }
-
-  int getQuantity(String productId) {
-    final item = _items.firstWhere(
-      (item) => item.product.id == productId,
-      orElse: () => OrderItem(
-        product: ProductModel(
-          id: '',
-          image: '',
-          title: '',
-          price: 0,
-          category: '',
-          description: '',
-        ),
-        quantity: 0,
-      ),
-    );
-    return item.quantity;
-  }
-
+  // Persistencia con SharedPreferences
   Future<void> _saveCart() async {
     final prefs = await SharedPreferences.getInstance();
-    final cartJson = _items.map((item) => item.toJson()).toList();
-    await prefs.setString('cart', json.encode(cartJson));
+    final jsonList = _items.map((item) => json.encode(item.toJson())).toList();
+    await prefs.setStringList('cart_items', jsonList);
   }
 
   Future<void> _loadCart() async {
     final prefs = await SharedPreferences.getInstance();
-    final cartString = prefs.getString('cart');
-    if (cartString != null) {
-      final cartJson = json.decode(cartString) as List<dynamic>;
+    final savedItems = prefs.getStringList('cart_items') ?? [];
+
+    try {
       _items.clear();
-      _items.addAll(
-        cartJson.map(
-          (item) => OrderItem(
-            product: ProductModel.fromJson(item['product']),
-            quantity: item['quantity'],
-          ),
-        ),
-      );
+      for (var itemJson in savedItems) {
+        _items.add(OrderItem.fromJson(json.decode(itemJson)));
+      }
       notifyListeners();
+    } catch (e) {
+      print('Error cargando carrito: $e');
     }
   }
 }
