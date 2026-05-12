@@ -20,8 +20,9 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.10.0' # Esta versión ya incluye Dart 3.10.0+
+          flutter-version: '3.10.6' # Esta versión incluye Dart 3.0.6+, compatible con tu ^3.10.0
           channel: 'stable'
+          cache: true # Esto acelerará tus futuros builds
 
       - name: Enable Flutter web
         run: flutter config --enable-web
