@@ -36,11 +36,30 @@ class DatabaseHelper {
     unitPrice REAL NOT NULL
   )
 ''');
+        await db.execute('''
+  CREATE TABLE pedidos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    resumen TEXT NOT NULL,
+    total REAL NOT NULL,
+    fecha TEXT NOT NULL
+  )
+''');
       },
     );
   }
+  Future<void> guardarPedido(String resumen, double total) async {
+    final db = await database;
+    await db.insert('pedidos', {
+      'resumen': resumen,
+      'total': total,
+      'fecha': DateTime.now().toIso8601String(),
+    });
+  }
 
-  /// Guarda o actualiza el único registro de usuario (siempre id = 1)
+  Future<List<Map<String, dynamic>>> obtenerPedidos() async {
+    final db = await database;
+    return await db.query('pedidos', orderBy: 'fecha DESC');
+  }
   Future<void> guardarUsuario({
     required String nombre,
     required String telefono,
@@ -118,12 +137,19 @@ class DatabaseHelper {
         token TEXT NOT NULL
       )
     ''');
+
+
+      Future<List<Map<String, dynamic>>> obtenerPedidos() async {
+        final db = await database;
+        return await db.query('pedidos', orderBy: 'fecha DESC');
+      }
       final result = await db.query('sesion', where: 'id = ?', whereArgs: [1]);
       return result.isNotEmpty ? result.first['token'] as String : null;
     } catch (_) {
       return null;
     }
   }
+
 
   Future<void> cerrarSesion() async {
     final db = await database;

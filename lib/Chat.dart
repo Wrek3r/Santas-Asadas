@@ -3,7 +3,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import 'models/OrderModel.dart';
 import 'providers/CartProvider.dart';
-import 'ApiService.dart';
 import 'database_helper.dart';
 
 class Chat extends StatefulWidget {
@@ -26,16 +25,13 @@ class _ChatState extends State<Chat> {
   }
 
   Future<void> _submitOrder() async {
-    if (!_isWithinBusinessHours()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Los pedidos solo se aceptan sábados y domingos de 12:00 PM a 5:00 PM',
-          ),
-        ),
-      );
-      return;
-    }
+    // Comenta esto temporalmente para probar:
+    // if (!_isWithinBusinessHours()) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text('Los pedidos solo se aceptan sábados y domingos de 12:00 PM a 5:00 PM')),
+    //   );
+    //   return;
+    // }
 
     final cart = Provider.of<CartProvider>(context, listen: false);
     if (cart.items.isEmpty) {
@@ -61,15 +57,12 @@ class _ChatState extends State<Chat> {
         notas: notes,
       );
 
-      // Enviar a API (opcional, ya que se envía por WhatsApp)
-      final apiService = ApiService();
-      await apiService.submitOrder(order);
 
-      // Generar mensaje de WhatsApp
       await _sendWhatsAppMessage(order);
 
-      // Limpiar carrito después del pedido
       cart.clearCart();
+      final resumen = order.items.map((i) => '${i.productTitle} x${i.quantity}').join(', ');
+      await DatabaseHelper.instance.guardarPedido(resumen, order.total);
     } catch (e) {
       ScaffoldMessenger.of(
         context,
@@ -133,13 +126,7 @@ class _ChatState extends State<Chat> {
         title: const Text('Confirmar Pedido'),
         centerTitle: true,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ),
+
         ],
       ),
       body: SingleChildScrollView(
@@ -275,7 +262,7 @@ class _ChatState extends State<Chat> {
                   width: double.infinity,
                   height: 56,
                   child: ElevatedButton.icon(
-                    onPressed: _isSubmitting || !_isWithinBusinessHours() ? null : _submitOrder,
+                    onPressed: _isSubmitting ? null : _submitOrder,
                     icon: _isSubmitting
                         ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
                         : const Icon(Icons.send_rounded, size: 22, color: Colors.white),

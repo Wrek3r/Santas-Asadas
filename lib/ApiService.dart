@@ -14,7 +14,6 @@ class ApiService extends BaseApiService {
 
   final CacheService _cacheService = CacheService();
 
-  // Claves de cache
   static const String _cacheKeyProducts = 'products_menu';
   static const String _cacheKeyPromos = 'promos';
 
@@ -29,7 +28,6 @@ class ApiService extends BaseApiService {
   /// Obtiene la lista de productos con cache y fallback automático a mock
   Future<List<ProductModel>> fetchProducts({bool forceRefresh = false}) async {
     try {
-      // Si no fuerza refresh, intenta obtener del cache
       if (!forceRefresh && _cacheService.has(_cacheKeyProducts)) {
         final cached = _cacheService.get<List<ProductModel>>(_cacheKeyProducts);
         if (cached != null) {
@@ -38,17 +36,14 @@ class ApiService extends BaseApiService {
         }
       }
 
-      // Realiza la petición GET
       final response = await get('/productos');
 
-      // Valida que la respuesta sea una lista
       if (response is! List) {
         throw ApiException(
           message: 'Respuesta de productos inválida: se esperaba una lista',
         );
       }
 
-      // Convierte a modelos
       final products = (response as List)
           .map((json) {
             try {

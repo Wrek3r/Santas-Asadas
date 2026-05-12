@@ -9,6 +9,9 @@ import 'package:santas_asadas/Login.dart';
 import 'providers/CartProvider.dart';
 import 'database_helper.dart';
 import 'jwt_helper.dart';
+import 'perfil_screen.dart';
+import 'pedidos_screen.dart';
+import 'configuracion_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -261,16 +264,19 @@ class _MainState extends State<Main> {
               ),
             ),
             const SizedBox(height: 8),
-            _buildDrawerItem(Icons.person_outline, 'Mi Perfil', () {}),
-            _buildDrawerItem(Icons.receipt_long_outlined, 'Mis Pedidos', () {}),
-            _buildDrawerItem(Icons.favorite_outline, 'Favoritos', () {}),
-            _buildDrawerItem(Icons.notifications_none_outlined, 'Notificaciones', () {}),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              child: Divider(thickness: 1),
-            ),
-            _buildDrawerItem(Icons.settings_outlined, 'Configuración', () {}),
-            _buildDrawerItem(Icons.help_outline, 'Ayuda y Soporte', () {}),
+            _buildDrawerItem(Icons.person_outline, 'Mi Perfil', () {
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const PerfilScreen()));
+            }),
+            _buildDrawerItem(Icons.receipt_long_outlined, 'Mis Pedidos', () {
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const PedidosScreen()));
+            }),
+// Favoritos queda igual por ahora
+            _buildDrawerItem(Icons.settings_outlined, 'Configuración', () {
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const ConfiguracionScreen()));
+            }),
             _buildDrawerItem(Icons.logout, 'Cerrar Sesión', () async {
               await DatabaseHelper.instance.cerrarSesion();
               if (context.mounted) {
