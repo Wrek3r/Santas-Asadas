@@ -12,27 +12,22 @@ class _PromosState extends State<Promos> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFF97316),
-        elevation: 0,
-        toolbarHeight: 70,
-        leadingWidth: 80,
+        toolbarHeight: 64,
+        leadingWidth: 72,
         leading: Padding(
-          padding: EdgeInsets.only(left: 10.0),
+          padding: const EdgeInsets.only(left: 12.0),
           child: CircleAvatar(
             backgroundColor: Colors.white,
             child: Image.asset('assets/Logo.png'),
           ),
         ),
-        title: Text(
-          'Promociones',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-        ),
+        title: const Text('Promociones'),
         centerTitle: true,
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 15.0),
+            padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
-              icon: Icon(Icons.menu, color: Colors.black, size: 40),
+              icon: const Icon(Icons.menu_rounded),
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
           ),
@@ -40,186 +35,205 @@ class _PromosState extends State<Promos> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Color(0xFF991B1B),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
-              ),
-              child: Column(
+            // Encabezado limpio
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    '¡OFERTAS DE HOY!',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w900,
-                      fontStyle: FontStyle.italic,
-                    ),
+                  const Text(
+                    'Ofertas de hoy',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
                   ),
-                  SizedBox(height: 10),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: Color(0xFFFBC02D),
+                      color: const Color(0xFFFBC02D).withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Text(
-                      'Solo por tiempo limitado 🔥',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    child: const Text(
+                      'Tiempo limitado',
+                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 11, color: Color(0xFF7A5000)),
                     ),
                   ),
                 ],
               ),
             ),
-
-            SizedBox(height: 20),
-
-            _PromoCard(
-              'PROMO FAMILIAR',
-              '2kg Asada + Complementos + Refresco 2L',
-              'ANTES: \$550',
-              '\480',
-              'assets/LandingFoto.jpg',
-              Color(0xFF991B1B),
-            ),
-            _PromoCard(
-              'DOMINGO DE PAPAS',
-              '2x1 en Papas de Asada',
-              'Válido solo Domingo',
-              '¡Aprovecha!',
-              'assets/Paquetes/papaasadanatural.jpg',
-              Color(0xFFF58220),
-            ),
-            _PromoCard(
-              'COMBO INDIVIDUAL',
-              '1/4 kg Arrachera + Complementos',
-              'Ideal para tu comida',
-              '\$80',
-              'assets/Paquetes/Paquete1.jpg',
-              Color(0xFF1A1A1A),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(20, 4, 20, 16),
+              child: Text(
+                'Aprovecha estas promociones exclusivas',
+                style: TextStyle(fontSize: 13, color: Colors.black54),
+              ),
             ),
 
-            SizedBox(height: 30),
+            _PromoCard(
+              titulo: 'Promo Familiar',
+              desc: '2kg Asada + Complementos + Refresco 2L',
+              precioAntes: '\$550',
+              precioDespues: '\$480',
+              img: 'assets/LandingFoto.jpg',
+              tag: 'AHORRA \$70',
+              tagColor: const Color(0xFF991B1B),
+            ),
+            _PromoCard(
+              titulo: 'Domingo de Papas',
+              desc: '2x1 en Papas de Asada. Válido solo el domingo.',
+              precioAntes: '',
+              precioDespues: '¡Aprovecha!',
+              img: 'assets/Paquetes/papaasadanatural.jpg',
+              tag: '2×1',
+              tagColor: const Color(0xFFF97316),
+            ),
+            _PromoCard(
+              titulo: 'Combo Individual',
+              desc: '1/4 kg Arrachera + Complementos incluidos',
+              precioAntes: '',
+              precioDespues: '\$80',
+              img: 'assets/Paquetes/Paquete1.jpg',
+              tag: 'PROMO',
+              tagColor: const Color(0xFF388E3C),
+            ),
+
+            const SizedBox(height: 32),
           ],
         ),
       ),
     );
   }
 
-  Widget _PromoCard(
-    String titulo,
-    String desc,
-    String sub,
-    String precio,
-    String img,
-    Color colorBase,
-  ) {
+  Widget _PromoCard({
+    required String titulo,
+    required String desc,
+    required String precioAntes,
+    required String precioDespues,
+    required String img,
+    required String tag,
+    required Color tagColor,
+  }) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      height: 180,
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      height: 210,
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.black, width: 2),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: Offset(4, 4),
+            color: Colors.black.withValues(alpha: 0.15),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(18),
-        child: Row(
+        borderRadius: BorderRadius.circular(20),
+        child: Stack(
+          fit: StackFit.expand,
           children: [
-            Expanded(
-              flex: 4,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Image.asset(
-                    img,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) =>
-                        Container(color: Colors.grey[200]),
+            // Imagen de fondo a pantalla completa
+            Image.asset(
+              img,
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF444444), Color(0xFF222222)],
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Colors.black.withOpacity(0.6),
-                          Colors.transparent,
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
-            Expanded(
-              flex: 6,
+
+            // Gradiente oscuro desde abajo para legibilidad del texto
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.transparent,
+                    Colors.black.withValues(alpha: 0.3),
+                    Colors.black.withValues(alpha: 0.85),
+                  ],
+                  stops: const [0.0, 0.45, 1.0],
+                ),
+              ),
+            ),
+
+            // Badge de tag en esquina superior izquierda
+            Positioned(
+              top: 16,
+              left: 16,
               child: Container(
-                padding: EdgeInsets.all(15),
-                color: colorBase,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      titulo,
-                      style: TextStyle(
-                        color: Color(0xFFFBC02D),
-                        fontWeight: FontWeight.w900,
-                        fontSize: 18,
-                      ),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                decoration: BoxDecoration(
+                  color: tagColor,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  tag,
+                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 11, letterSpacing: 0.5),
+                ),
+              ),
+            ),
+
+            // Texto en la parte inferior — con padding para no tocar los bordes
+            Positioned(
+              bottom: 20,
+              left: 20,
+              right: 20,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    titulo,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      letterSpacing: 0.2,
                     ),
-                    SizedBox(height: 5),
-                    Text(
-                      desc,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    desc,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.white.withValues(alpha: 0.85),
+                      fontSize: 12,
+                      height: 1.4,
                     ),
-                    SizedBox(height: 10),
-                    Text(
-                      sub,
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.7),
-                        fontSize: 10,
-                        decoration: sub.contains('ANTES')
-                            ? TextDecoration.lineThrough
-                            : null,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      if (precioAntes.isNotEmpty) ...[
                         Text(
-                          precio,
+                          precioAntes,
                           style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 22,
+                            color: Colors.white.withValues(alpha: 0.6),
+                            fontSize: 13,
+                            decoration: TextDecoration.lineThrough,
+                            decorationColor: Colors.white60,
                           ),
                         ),
+                        const SizedBox(width: 8),
                       ],
-                    ),
-                  ],
-                ),
+                      Text(
+                        precioDespues,
+                        style: const TextStyle(
+                          color: Color(0xFFFBC02D),
+                          fontWeight: FontWeight.w900,
+                          fontSize: 26,
+                          height: 1.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],

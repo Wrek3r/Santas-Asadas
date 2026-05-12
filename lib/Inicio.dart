@@ -13,22 +13,21 @@ class _InicioState extends State<Inicio> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  Color(0xFFF97316),
-        elevation: 0,
-        toolbarHeight: 70,
-        leadingWidth: 80,
+        toolbarHeight: 64,
+        leadingWidth: 72,
         leading: Padding(
-          padding:  EdgeInsets.only(left: 10.0),
+          padding: const EdgeInsets.only(left: 12.0),
           child: CircleAvatar(
             backgroundColor: Colors.white,
-            child: Image.asset('assets/Logo.png',),
+            child: Image.asset('assets/Logo.png'),
           ),
         ),
+        title: const Text('Santas Asadas'),
         actions: [
           Padding(
-            padding:  EdgeInsets.only(right: 15.0),
+            padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
-              icon:  Icon(Icons.menu, color: Colors.black, size: 40),
+              icon: const Icon(Icons.menu_rounded),
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
           ),
@@ -57,7 +56,7 @@ class _InicioState extends State<Inicio> {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Colors.transparent, Colors.black.withOpacity(0.8)],
+                      colors: [Colors.transparent, Colors.black.withValues(alpha: 0.8)],
                     ),
                   ),
                 ),
@@ -89,45 +88,50 @@ class _InicioState extends State<Inicio> {
                 ),
               ],
             ),
-             SizedBox(height: 25),
+            const SizedBox(height: 24),
 
             Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
                   Expanded(
                     child: _buildMainButton(
                         context,
                         'Ver Menú',
-                         Color(0xFF991B1B),
+                        Icons.restaurant_menu,
+                        const Color(0xFF991B1B),
                         Colors.white,
                         () => Main.of(context)?.cambiarIndice(1)),
                   ),
-                   SizedBox(width: 15),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: _buildMainButton(
                         context,
-                        'Pedido',
-                         Color(0xFFFBC02D),
-                        Colors.black,
+                        'Hacer Pedido',
+                        Icons.shopping_basket_outlined,
+                        const Color(0xFFFBC02D),
+                        Colors.black87,
                         () => Main.of(context)?.cambiarIndice(4)),
                   ),
                 ],
               ),
             ),
-             SizedBox(height: 35),
+            const SizedBox(height: 32),
 
-             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Nuestros Favoritos ✨',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Nuestros Favoritos',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87),
+                  ),
+                  Text('Ver todo', style: TextStyle(fontSize: 13, color: Colors.orangeAccent, fontWeight: FontWeight.w600)),
+                ],
               ),
             ),
-             SizedBox(height: 15),
+            const SizedBox(height: 16),
             Padding(
               padding:  EdgeInsets.symmetric(horizontal: 20),
               child: Row(
@@ -160,81 +164,82 @@ class _InicioState extends State<Inicio> {
     );
   }
 
-  Widget _buildMainButton(BuildContext context, String label, Color color, Color textColor, VoidCallback onTap) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: 65,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.black, width: 2),
-          boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4, offset:  Offset(0, 4)),
-          ],
-        ),
-        child: Center(
-          child: Text(
-            label,
-            style: TextStyle(color: textColor, fontSize: 18, fontWeight: FontWeight.bold),
+  Widget _buildMainButton(BuildContext context, String label, IconData icon, Color color, Color textColor, VoidCallback? onTap) {
+    return SizedBox(
+      height: 56,
+      child: ElevatedButton.icon(
+        onPressed: onTap,
+        icon: Icon(icon, color: textColor, size: 20),
+        label: Text(label),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          foregroundColor: textColor,
+          elevation: 3,
+          shadowColor: Colors.black38,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(14)),
           ),
+          textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
         ),
       ),
     );
   }
 
   Widget _buildCardMejorada(String titulo, String precio, String img, String descripcion) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.black, width: 1),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset:  Offset(0, 5)),
-        ],
+    return Card(
+      elevation: 4,
+      shadowColor: Colors.black26,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
+      clipBehavior: Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius:  BorderRadius.vertical(top: Radius.circular(19)),
-            child: Image.asset(
-              img,
+          Image.asset(
+            img,
+            height: 120,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => Container(
               height: 120,
-              width: double.infinity,
-              fit: BoxFit.cover,
+              color: Colors.grey[200],
+              child: const Icon(Icons.restaurant, size: 40, color: Colors.grey),
             ),
           ),
           Padding(
-            padding:  EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   titulo,
-                  style:  TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                 SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
                   '\$$precio',
-                  style:  TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Color(0xFF991B1B)),
+                  style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 20, color: Color(0xFF991B1B)),
                 ),
-                 SizedBox(height: 10),
-                GestureDetector(
-                  onTap: () => _mostrarDetalle(titulo, precio, img, descripcion),
-                  child: Container(
-                    padding:  EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                    decoration: BoxDecoration(
-                      color:  Color(0xFFFBC02D),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.black, width: 1.5),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  height: 32,
+                  child: ElevatedButton(
+                    onPressed: () => _mostrarDetalle(titulo, precio, img, descripcion),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFFBC02D),
+                      foregroundColor: Colors.black87,
+                      elevation: 0,
+                      padding: EdgeInsets.zero,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                      ),
+                      textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
                     ),
-                    child:  Text(
-                      'Ver',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                    ),
+                    child: const Text('Ver detalles'),
                   ),
                 ),
               ],
@@ -250,46 +255,78 @@ class _InicioState extends State<Inicio> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor:  Color(0xFFF58220),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-            side:  BorderSide(color: Colors.black, width: 2),
+          backgroundColor: const Color(0xFFFFF8F0),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
+          contentPadding: EdgeInsets.zero,
+          titlePadding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
           title: Text(
             titulo,
-            style:  TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
           ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  imagen,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) =>  Icon(Icons.restaurant, size: 50),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 12),
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(0),
+                    topRight: Radius.circular(0),
+                  ),
+                  child: Image.asset(
+                    imagen,
+                    width: double.infinity,
+                    height: 180,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => const SizedBox(
+                      height: 100,
+                      child: Center(child: Icon(Icons.restaurant, size: 50, color: Colors.grey)),
+                    ),
+                  ),
                 ),
-              ),
-               SizedBox(height: 15),
-              Text(
-                "Precio: \$$precio",
-                style:  TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-               SizedBox(height: 10),
-              Text(
-                descripcion,
-                style:  TextStyle(fontSize: 16),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '\$$precio',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w900,
+                          color: Color(0xFF991B1B),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        descripcion,
+                        style: const TextStyle(fontSize: 14, height: 1.5, color: Colors.black87),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child:  Text(
-                "Cerrar",
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              style: TextButton.styleFrom(foregroundColor: const Color(0xFF991B1B)),
+              child: const Text('Cerrar', style: TextStyle(fontWeight: FontWeight.w700)),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFFBC02D),
+                foregroundColor: Colors.black87,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
               ),
+              child: const Text('Ver Menú', style: TextStyle(fontWeight: FontWeight.w700)),
             ),
           ],
         );

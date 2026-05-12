@@ -119,30 +119,25 @@ class _ChatState extends State<Chat> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFF97316),
-        elevation: 0,
-        toolbarHeight: 70,
-        leadingWidth: 80,
+        toolbarHeight: 64,
+        leadingWidth: 72,
         leading: Padding(
-          padding: EdgeInsets.only(left: 10.0),
+          padding: const EdgeInsets.only(left: 12.0),
           child: CircleAvatar(
             backgroundColor: Colors.white,
             child: Image.asset(
               'assets/Logo.png',
-              errorBuilder: (_, __, ___) => Icon(Icons.restaurant),
+              errorBuilder: (_, __, ___) => const Icon(Icons.restaurant),
             ),
           ),
         ),
-        title: Text(
-          'Confirmar Pedido',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-        ),
+        title: const Text('Confirmar Pedido'),
         centerTitle: true,
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 15.0),
+            padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
-              icon: Icon(Icons.menu, color: Colors.black, size: 40),
+              icon: const Icon(Icons.arrow_back_ios_new_rounded),
               onPressed: () => Navigator.pop(context),
             ),
           ),
@@ -150,111 +145,126 @@ class _ChatState extends State<Chat> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(25.0),
+          padding: const EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child: Icon(
-                  Icons.shopping_basket_outlined,
-                  size: 80,
-                  color: Color(0xFF991B1B),
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF991B1B).withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.shopping_basket_outlined, size: 56, color: Color(0xFF991B1B)),
                 ),
               ),
-              SizedBox(height: 20),
-              Center(
+              const SizedBox(height: 16),
+              const Center(
                 child: Text(
                   'Resumen de tu Pedido',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 24),
 
               if (cart.items.isEmpty) ...[
                 Center(
-                  child: Text(
-                    'Tu carrito está vacío.\nAgrega productos desde el menú.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                  child: Column(
+                    children: [
+                      Icon(Icons.remove_shopping_cart_outlined, size: 64, color: Colors.grey[400]),
+                      const SizedBox(height: 16),
+                      Text('Tu carrito está vacío.', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.grey[700])),
+                      const SizedBox(height: 8),
+                      Text('Agrega productos desde el menú.', style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+                    ],
                   ),
                 ),
               ] else ...[
-                Text(
-                  'Productos:',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('Productos', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18)),
+                    TextButton.icon(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Vaciar carrito'),
+                            content: const Text('¿Estás seguro de que quieres vaciar el carrito?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Cancelar'),
+                              ),
+                              ElevatedButton(
+                                onPressed: () { cart.clearCart(); Navigator.pop(context); },
+                                style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF991B1B), foregroundColor: Colors.white),
+                                child: const Text('Vaciar'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.delete_outline, size: 18),
+                      label: const Text('Vaciar'),
+                      style: TextButton.styleFrom(foregroundColor: const Color(0xFF991B1B)),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 8),
                 ...cart.items.map(
                   (item) => Card(
+                    margin: const EdgeInsets.only(bottom: 8),
                     child: ListTile(
-                      title: Text(item.productTitle),
-                      subtitle: Text('Cantidad: ${item.quantity}'),
-                      trailing: Text('\$${item.subtotal.toStringAsFixed(2)}'),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      title: Text(item.productTitle, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Text('Cantidad: ${item.quantity}', style: const TextStyle(fontSize: 13, color: Colors.black54)),
+                      ),
+                      trailing: Text(
+                        '\$${item.subtotal.toStringAsFixed(2)}',
+                        style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15, color: Color(0xFFF97316)),
+                      ),
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
-                Text(
-                  'Total: \$${cart.totalAmount.toStringAsFixed(2)}',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF991B1B),
+                const SizedBox(height: 16),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF991B1B).withValues(alpha: 0.08),
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Total a pagar', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+                      Text('\$${cart.totalAmount.toStringAsFixed(2)}', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Color(0xFF991B1B))),
+                    ],
                   ),
                 ),
-                SizedBox(height: 10),
-                TextButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text('Vaciar Carrito'),
-                        content: Text(
-                          '¿Estás seguro de que quieres vaciar el carrito?',
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: Text('Cancelar'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              cart.clearCart();
-                              Navigator.pop(context);
-                            },
-                            child: Text('Vaciar'),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'Vaciar Carrito',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ),
-                SizedBox(height: 20),
+                const SizedBox(height: 24),
 
                 if (!_isWithinBusinessHours()) ...[
                   Container(
-                    margin: EdgeInsets.only(bottom: 20),
-                    padding: EdgeInsets.all(15),
+                    margin: const EdgeInsets.only(bottom: 16),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.orange[100],
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.orange),
+                      color: Colors.amber[50],
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      border: Border.all(color: Colors.amber.shade600, width: 1.5),
                     ),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.warning, color: Colors.orange[800]),
-                        SizedBox(width: 10),
+                        Icon(Icons.schedule_outlined, color: Colors.amber[800], size: 20),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            '⚠️ Los pedidos solo se aceptan sábados y domingos de 12:00 PM a 5:00 PM.',
-                            style: TextStyle(
-                              color: Colors.orange[800],
-                              fontWeight: FontWeight.bold,
-                            ),
+                            'Los pedidos solo se aceptan sábados y domingos de 12:00 PM a 5:00 PM.',
+                            style: TextStyle(color: Colors.amber[900], fontWeight: FontWeight.w600, fontSize: 13),
                           ),
                         ),
                       ],
@@ -264,73 +274,43 @@ class _ChatState extends State<Chat> {
 
                 SizedBox(
                   width: double.infinity,
-                  height: 65,
+                  height: 56,
                   child: ElevatedButton.icon(
-                    onPressed: _isSubmitting || !_isWithinBusinessHours()
-                        ? null
-                        : _submitOrder,
+                    onPressed: _isSubmitting || !_isWithinBusinessHours() ? null : _submitOrder,
                     icon: _isSubmitting
-                        ? SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
-                            ),
-                          )
-                        : Icon(
-                            Icons.send_rounded,
-                            size: 30,
-                            color: Colors.white,
-                          ),
+                        ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                        : const Icon(Icons.send_rounded, size: 22, color: Colors.white),
                     label: Text(
-                      _isSubmitting
-                          ? 'ENVIANDO...'
-                          : 'ENVIAR PEDIDO POR WHATSAPP',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                      _isSubmitting ? 'Enviando...' : 'Enviar por WhatsApp',
+                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white),
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF25D366),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        side: BorderSide(color: Colors.black, width: 2),
-                      ),
-                      elevation: 5,
+                      backgroundColor: const Color(0xFF25D366),
+                      disabledBackgroundColor: Colors.grey[300],
+                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(14))),
+                      elevation: 3,
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 12),
               ],
 
               SizedBox(
                 width: double.infinity,
-                height: 65,
+                height: 56,
                 child: ElevatedButton.icon(
                   onPressed: _llamarTelefono,
-                  icon: Icon(Icons.phone, color: Colors.black, size: 28),
-                  label: Text(
-                    'LLAMAR POR TELÉFONO',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
+                  icon: const Icon(Icons.phone_outlined, size: 22),
+                  label: const Text('Llamar por teléfono', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFBC02D),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      side: BorderSide(color: Colors.black, width: 2),
-                    ),
-                    elevation: 5,
+                    backgroundColor: const Color(0xFFFBC02D),
+                    foregroundColor: Colors.black87,
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(14))),
+                    elevation: 3,
                   ),
                 ),
               ),
+              const SizedBox(height: 8),
             ],
           ),
         ),
