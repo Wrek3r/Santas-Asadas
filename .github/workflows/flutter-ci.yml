@@ -20,7 +20,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.20.0' # Usa Flutter con Dart 3.10+ para cumplir el sdk: ^3.10.0
+          flutter-version: '3.10.6' # Usar Flutter 3.10.x, que incluye Dart 3.0.6
           channel: 'stable'
           cache: true # Esto acelerará tus futuros builds
 
