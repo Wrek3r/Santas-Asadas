@@ -7,13 +7,26 @@ import 'package:santas_asadas/Menu.dart';
 import 'package:santas_asadas/Promos.dart';
 import 'package:santas_asadas/Login.dart';
 import 'providers/CartProvider.dart';
+import 'database_helper.dart';
+import 'jwt_helper.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   MyApp({super.key});
+  Future<Widget> _resolverPantalla() async {
+    final token = await DatabaseHelper.instance.obtenerToken();
+
+    if (token == null || JwtHelper.tokenExpirado(token)) {
+      await DatabaseHelper.instance.cerrarSesion();
+      return Login();
+    }
+
+    return Main();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +156,20 @@ class MyApp extends StatelessWidget {
             elevation: 8,
           ),
         ),
-        home: Login(),
+        home:  FutureBuilder<Widget>(
+          future: _resolverPantalla(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Scaffold(
+            backgroundColor: Color(0xFFF5F5F5),
+            body: Center(
+              child: CircularProgressIndicator(color: Color(0xFFF97316)),
+            ),
+          );
+        }
+        return snapshot.data!;
+      },
+    ),
         routes: {
           '/menu': (context) => Menu(),
           '/chat': (context) => Chat(),
@@ -245,12 +271,15 @@ class _MainState extends State<Main> {
             ),
             _buildDrawerItem(Icons.settings_outlined, 'Configuración', () {}),
             _buildDrawerItem(Icons.help_outline, 'Ayuda y Soporte', () {}),
-            _buildDrawerItem(Icons.logout, 'Cerrar Sesión', () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => Login()),
-                (route) => false,
-              );
+            _buildDrawerItem(Icons.logout, 'Cerrar Sesión', () async {
+              await DatabaseHelper.instance.cerrarSesion();
+              if (context.mounted) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => Login()),
+                      (route) => false,
+                );
+              }
             }),
             const SizedBox(height: 16),
           ],
@@ -297,6 +326,7 @@ class _MainState extends State<Main> {
         ],
       ),
     );
+
   }
 
   Widget _buildDrawerItem(IconData icon, String title, VoidCallback onTap) {
@@ -309,4 +339,5 @@ class _MainState extends State<Main> {
       onTap: onTap,
     );
   }
+
 }

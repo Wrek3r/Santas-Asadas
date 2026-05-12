@@ -1,5 +1,8 @@
-﻿import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+﻿import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'database_helper.dart';
 import 'main.dart';
 
 class Login extends StatefulWidget {
@@ -17,12 +20,32 @@ class _LoginState extends State<Login> {
   final TextEditingController _direccionController = TextEditingController();
   final TextEditingController _referenciasController = TextEditingController();
 
+
   Future<void> _guardarDatos() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('nombre', _nombreController.text.trim());
-    await prefs.setString('telefono', _telefonoController.text.trim());
-    await prefs.setString('direccion', _direccionController.text.trim());
-    await prefs.setString('referencias', _referenciasController.text.trim());
+    final response = await http.post(
+      Uri.parse('http://192.168.100.4:3000/api/registro'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'nombre':      _nombreController.text.trim(),
+        'telefono':    _telefonoController.text.trim(),
+        'direccion':   _direccionController.text.trim(),
+        'referencias': _referenciasController.text.trim(),
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final token = json.decode(response.body)['token'] as String;
+      print('TOKEN: $token'); // aparece en el log de Android Studio
+      await DatabaseHelper.instance.guardarUsuario(
+        nombre:      _nombreController.text.trim(),
+        telefono:    _telefonoController.text.trim(),
+        direccion:   _direccionController.text.trim(),
+        referencias: _referenciasController.text.trim(),
+      );
+      await DatabaseHelper.instance.guardarToken(token);
+    } else {
+      throw Exception('Error del servidor');
+    }
   }
 
   String? _validateName(String? value) {

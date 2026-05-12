@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../models/ProductModel.dart';
 import '../models/OrderModel.dart';
+import '../database_helper.dart';
+
 
 class CartProvider with ChangeNotifier {
   final List<OrderItem> _items = [];
@@ -78,21 +79,27 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Persistencia con SharedPreferences
   Future<void> _saveCart() async {
-    final prefs = await SharedPreferences.getInstance();
-    final jsonList = _items.map((item) => json.encode(item.toJson())).toList();
-    await prefs.setStringList('cart_items', jsonList);
+    final items = _items.map((item) => {
+      'productId': item.productId,
+      'productTitle': item.productTitle,
+      'quantity': item.quantity,
+      'unitPrice': item.unitPrice,
+    }).toList();
+    await DatabaseHelper.instance.guardarCarrito(items);
   }
 
   Future<void> _loadCart() async {
-    final prefs = await SharedPreferences.getInstance();
-    final savedItems = prefs.getStringList('cart_items') ?? [];
-
     try {
+      final rows = await DatabaseHelper.instance.cargarCarrito();
       _items.clear();
-      for (var itemJson in savedItems) {
-        _items.add(OrderItem.fromJson(json.decode(itemJson)));
+      for (final row in rows) {
+        _items.add(OrderItem(
+          productId: row['productId'],
+          productTitle: row['productTitle'],
+          quantity: row['quantity'],
+          unitPrice: row['unitPrice'],
+        ));
       }
       notifyListeners();
     } catch (e) {

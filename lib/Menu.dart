@@ -282,7 +282,7 @@ class _MenuState extends State<Menu> {
           Expanded(
             flex: 6,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+              padding: const EdgeInsets.fromLTRB(10, 6, 10, 6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -292,11 +292,11 @@ class _MenuState extends State<Menu> {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.black87, height: 1.3),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 2),
                   // Precio en dark para máximo contraste
                   Text(
                     '\$${producto.price.toStringAsFixed(0)}',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Colors.black87),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: Colors.black87),
                   ),
                   const Spacer(),
                   Row(
@@ -310,10 +310,10 @@ class _MenuState extends State<Menu> {
                       _qtyButton(Icons.add, () => _changeQuantity(producto.id, 1)),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 4),
                   SizedBox(
                     width: double.infinity,
-                    height: 34,
+                    height: 30,
                     child: ElevatedButton(
                       onPressed: () {
                         final cantidad = _getQuantity(producto.id);

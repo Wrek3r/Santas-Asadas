@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'models/OrderModel.dart';
 import 'providers/CartProvider.dart';
 import 'ApiService.dart';
+import 'database_helper.dart';
 
 class Chat extends StatefulWidget {
   Chat({super.key});
@@ -48,12 +48,11 @@ class _ChatState extends State<Chat> {
     setState(() => _isSubmitting = true);
 
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final userName = prefs.getString('nombre') ?? 'Cliente';
-      final address = prefs.getString('direccion') ?? 'No especificada';
-      final phone = prefs.getString('telefono') ?? '';
-      final notes = prefs.getString('notas') ?? '';
-
+      final usuario = await DatabaseHelper.instance.obtenerUsuario();
+      final userName = usuario?['nombre'] ?? 'Cliente';
+      final address = usuario?['direccion'] ?? 'No especificada';
+      final phone = usuario?['telefono'] ?? '';
+      final notes = usuario?['referencias'] ?? '';
       final order = OrderModel(
         items: cart.items,
         clienteNombre: userName,
