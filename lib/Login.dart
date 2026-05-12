@@ -77,134 +77,168 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF58220),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                SizedBox(height: 80),
-                CircleAvatar(
-                  radius: 60,
-                  backgroundColor: Colors.white,
-                  child: Image.asset(
-                    'assets/Logo.png',
-                    height: 90,
-                    errorBuilder: (_, __, ___) => Icon(
-                      Icons.restaurant,
-                      size: 60,
-                      color: Color(0xFF991B1B),
+      backgroundColor: const Color(0xFFF5F5F5),
+      body: Column(
+        children: [
+          // Hero header naranja con logo
+          Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xFFF97316), Color(0xFFFF6B00)],
+              ),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(36),
+                bottomRight: Radius.circular(36),
+              ),
+            ),
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24, 32, 24, 36),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(color: Colors.black.withValues(alpha: 0.25), blurRadius: 20, offset: const Offset(0, 8)),
+                        ],
+                      ),
+                      child: CircleAvatar(
+                        radius: 52,
+                        backgroundColor: Colors.white,
+                        child: Image.asset(
+                          'assets/Logo.png',
+                          height: 80,
+                          errorBuilder: (_, __, ___) => const Icon(Icons.restaurant, size: 52, color: Color(0xFFF97316)),
+                        ),
+                      ),
                     ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Santas Asadas',
+                      style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900, color: Colors.white, letterSpacing: 0.5),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      'Regístrate para pedir más rápido',
+                      style: TextStyle(fontSize: 14, color: Colors.white.withValues(alpha: 0.85), fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // Formulario sobre fondo gris
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 28),
+                      const Text(
+                        'Tus datos de envío',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
+                      ),
+                      const SizedBox(height: 4),
+                      const Text(
+                        'Solo necesitamos esto una vez',
+                        style: TextStyle(fontSize: 13, color: Colors.black54),
+                      ),
+                      const SizedBox(height: 24),
+
+                  _buildTextField(
+                    controller: _nombreController,
+                    validator: _validateName,
+                    label: 'Nombre Completo',
+                    icon: Icons.person_outline,
+                    hint: 'Ej. Juan Pérez',
                   ),
-                ),
-                SizedBox(height: 20),
-                Text(
-                  'DATOS DE ENVÍO',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.black,
-                    letterSpacing: 1.5,
+                  const SizedBox(height: 16),
+
+                  _buildTextField(
+                    controller: _telefonoController,
+                    validator: _validatePhone,
+                    label: 'Teléfono de Contacto',
+                    icon: Icons.phone_android_outlined,
+                    hint: '311 123 4567',
+                    keyboardType: TextInputType.phone,
                   ),
-                ),
-                Text(
-                  'Regístrate para pedir más rápido',
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(height: 16),
+
+                  _buildTextField(
+                    controller: _direccionController,
+                    validator: _validateAddress,
+                    label: 'Dirección (Calle y Número)',
+                    icon: Icons.location_on_outlined,
+                    hint: 'Ej. Calle Ixtlán #123, Los Fresnos',
                   ),
-                ),
-                SizedBox(height: 40),
+                  const SizedBox(height: 16),
 
-                _buildTextField(
-                  controller: _nombreController,
-                  validator: _validateName,
-                  label: 'Nombre Completo',
-                  icon: Icons.person,
-                  hint: 'Ej. Juan Pérez',
-                ),
-                SizedBox(height: 20),
+                  _buildTextField(
+                    controller: _referenciasController,
+                    validator: _validateReferences,
+                    label: 'Referencias (Opcional)',
+                    icon: Icons.map_outlined,
+                    hint: 'Ej. Entre calle X y Y, portón negro',
+                    maxLines: 2,
+                  ),
 
-                _buildTextField(
-                  controller: _telefonoController,
-                  validator: _validatePhone,
-                  label: 'Teléfono de Contacto',
-                  icon: Icons.phone_android,
-                  hint: '311 123 4567',
-                  keyboardType: TextInputType.phone,
-                ),
-                SizedBox(height: 20),
+                  const SizedBox(height: 32),
 
-                _buildTextField(
-                  controller: _direccionController,
-                  validator: _validateAddress,
-                  label: 'Dirección (Calle y Número)',
-                  icon: Icons.location_on,
-                  hint: 'Ej. Calle Ixtlán #123, Los Fresnos',
-                ),
-                SizedBox(height: 20),
-
-                _buildTextField(
-                  controller: _referenciasController,
-                  validator: _validateReferences,
-                  label: 'Referencias (Opcional)',
-                  icon: Icons.map,
-                  hint: 'Ej. Entre calle X y Y, portón negro',
-                  maxLines: 2,
-                ),
-
-                SizedBox(height: 40),
-
-                SizedBox(
-                  width: double.infinity,
-                  height: 60,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        await _guardarDatos(); // Guardamos los datos
-
-                        if (mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('¡Datos guardados! Bienvenido.'),
-                            ),
-                          );
-
-                          // Navegamos al inicio reemplazando el Login
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => Main()),
-                          );
+                  SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          await _guardarDatos();
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('¡Datos guardados! Bienvenido.'),
+                              ),
+                            );
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => Main()),
+                            );
+                          }
                         }
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF991B1B),
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        side: BorderSide(color: Colors.black, width: 2),
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF991B1B),
+                        foregroundColor: Colors.white,
+                        disabledBackgroundColor: Colors.black26,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(14)),
+                        ),
+                        elevation: 4,
+                        shadowColor: Colors.black38,
                       ),
-                      elevation: 5,
-                    ),
-                    child: Text(
-                      'COMENZAR A PEDIR',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                      child: const Text(
+                        'COMENZAR A PEDIR',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, letterSpacing: 1.0),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: 50),
-              ],
+                  const SizedBox(height: 40),
+                ],
+              ),
             ),
           ),
         ),
       ),
-    );
+    ],
+  ),
+);
   }
 
   Widget _buildTextField({
@@ -221,35 +255,19 @@ class _LoginState extends State<Login> {
       children: [
         Text(
           label,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: Colors.black87),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 6),
         TextFormField(
           controller: controller,
           keyboardType: keyboardType,
           maxLines: maxLines,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
           decoration: InputDecoration(
             hintText: hint,
-            prefixIcon: Icon(icon, color: Colors.black),
-            filled: true,
-            fillColor: Colors.white,
-            contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(color: Colors.black, width: 2),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(color: Color(0xFF991B1B), width: 2),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(color: Colors.red, width: 2),
-            ),
+            prefixIcon: Icon(icon),
           ),
-          validator:
-              validator ??
+          validator: validator ??
               (value) {
                 if (value == null || value.trim().isEmpty) {
                   return 'Este campo es obligatorio';
